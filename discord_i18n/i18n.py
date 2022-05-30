@@ -16,7 +16,7 @@ __all__ = ("DiscordI18N",)
 
 class DiscordI18N:
 
-    def __init__(self, lang_file_dir: str, *, db: MongoManager, fallback: str, /) -> None:
+    def __init__(self, lang_file_dir: str, /, *, db: MongoManager, fallback: str) -> None:
         self._db = db
         self.languages = {}
         self.fallback = fallback
@@ -87,7 +87,7 @@ class DiscordI18N:
         """
         is_interaction = isinstance(ctx, discord.Interaction)
 
-        target_id = (ctx.guild_id if is_interaction else ctx.guild.id) if use_guild else (ctx.user.id if is_interaction else ctx.author.id)
+        target_id = (ctx.guild_id if is_interaction else ctx.guild.id) if use_guild else (ctx.user.id if is_interaction else ctx.author.id)  # type: ignore
         translated = await self.translate_with_id(target_id, text, type="guild" if use_guild else "user")  # type: ignore
 
         return translated

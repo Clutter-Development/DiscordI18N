@@ -1,15 +1,14 @@
-from typing import TypeVar
+from typing import TypeVar, Any
 
 __all__ = ("find_in_nested_dict", "NestedDict")
 
 T = TypeVar("T")
-T2 = TypeVar("T2")
-NestedDict = dict[str, T | "Nest[T]"]
+NestedDict = dict[str, Any | "NestedDict"]
 
 
 def find_in_nested_dict(
-    find_in: NestedDict[T], path: str | list[str], /, *, default: T2 = None
-) -> T | T2:
+    find_in: NestedDict, path: str | list[str], /, *, default: T = None
+) -> Any | T:
     """Finds the value that is in the path.
     Args:
         find_in (NestedDict): The dictionary to get the value from.
