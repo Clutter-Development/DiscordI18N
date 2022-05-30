@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 setup(
     name="DiscordI18N",
     author="Clutter Development",
-    version="1.0.0",
+    version="1.0.1",
     license="MIT",
     description="A simple I18N handler for Discord bots.",
     install_requires=requirements,
