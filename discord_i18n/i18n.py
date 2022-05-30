@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal
-import json5
 import os
+from typing import TYPE_CHECKING, Literal
+
 import discord
+import json5
 from discord.ext import commands
-from .misc import find_in_nested_dict
+
 from .errors import NoFallback, UnknownTranslationString
+from .misc import find_in_nested_dict
 
 if TYPE_CHECKING:
     from mongo_manager import MongoManager
@@ -15,7 +17,6 @@ __all__ = ("DiscordI18N",)
 
 
 class DiscordI18N:
-
     def __init__(self, lang_file_dir: str, /, *, db: MongoManager, fallback: str) -> None:
         self._db = db
         self.languages = {}
@@ -24,14 +25,18 @@ class DiscordI18N:
         files = os.listdir(lang_file_dir)
 
         if fallback not in files:
-            raise NoFallback(f"The fallback language ({fallback}) does not exist in the languages directory ({lang_file_dir}).")
+            raise NoFallback(
+                f"The fallback language ({fallback}) does not exist in the languages directory ({lang_file_dir})."
+            )
 
         for fn in files:
             if fn.endswith(("json", "json5")):
                 with open(os.path.join(lang_file_dir, fn)) as f:
-                    self.languages[fn[:-len(fn.rsplit(".", 1)[-1])]] = json5.load(f)
+                    self.languages[fn[: -len(fn.rsplit(".", 1)[-1])]] = json5.load(f)
 
-    async def translate_with_id(self, id: int, text: str, /, *, type: Literal["guild", "user"]) -> str:
+    async def translate_with_id(
+        self, id: int, text: str, /, *, type: Literal["guild", "user"]
+    ) -> str:
         """Fetches the preferred language for the user with an id. Then gets the translation with the language. If the translation is not found, the fallback translation is used. If the fallback translation is not found, an error is raised.
 
         Args:
@@ -47,17 +52,14 @@ class DiscordI18N:
         """
         translated = find_in_nested_dict(
             self.languages.get(
-                await self._db.get(
-                    f"{f'{type}s'}.{id}.language",
-                    default=self.fallback
-                ),
-                self.fallback
+                await self._db.get(f"{f'{type}s'}.{id}.language", default=self.fallback),
+                self.fallback,
             ),
             text,
             default=find_in_nested_dict(
                 self.languages[self.fallback],
                 text,
-            )
+            ),
         )
         if not translated:
             raise UnknownTranslationString(f"Unknown translation string: {text}")
@@ -65,12 +67,12 @@ class DiscordI18N:
         return translated
 
     async def __call__(
-            self,
-            ctx: discord.Message | discord.Interaction | commands.Context,
-            text: str,
-            /,
-            *,
-            use_guild: bool = False
+        self,
+        ctx: discord.Message | discord.Interaction | commands.Context,
+        text: str,
+        /,
+        *,
+        use_guild: bool = False,
     ) -> str:
         """Translates a translation code to human-readable text.
 

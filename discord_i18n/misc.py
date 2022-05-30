@@ -1,4 +1,4 @@
-from typing import TypeVar, Any
+from typing import Any, TypeVar
 
 __all__ = ("find_in_nested_dict", "NestedDict")
 
