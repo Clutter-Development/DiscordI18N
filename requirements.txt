@@ -1,3 +1,0 @@
-discord.py @ git+https://github.com/Rapptz/discord.py
-mongo_manager @ git+https://github.com/Clutter-Development/MongoManager
-json5
