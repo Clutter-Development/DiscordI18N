@@ -4,7 +4,7 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="DiscordI18N",
+    name="discord_i18n",
     author="Clutter Development",
     version="1.0.1",
     license="MIT",
