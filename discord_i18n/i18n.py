@@ -24,15 +24,15 @@ class DiscordI18N:
 
         files = os.listdir(lang_file_dir)
 
-        if fallback not in files:
-            raise NoFallback(
-                f"The fallback language ({fallback}) does not exist in the languages directory ({lang_file_dir})."
-            )
-
         for fn in files:
             if fn.endswith(("json", "json5")):
                 with open(os.path.join(lang_file_dir, fn)) as f:
                     self.languages[fn[: -len(fn.rsplit(".", 1)[-1])]] = json5.load(f)
+
+        if fallback not in self.languages:
+            raise NoFallback(
+                f"The fallback language ({fallback}) does not exist in the languages directory ({lang_file_dir})."
+            )
 
     async def translate_with_id(
         self, id: int, text: str, /, *, type: Literal["guild", "user"]
