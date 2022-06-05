@@ -27,7 +27,7 @@ class DiscordI18N:
         for fn in files:
             if fn.endswith(("json", "json5")):
                 with open(os.path.join(lang_file_dir, fn)) as f:
-                    self.languages[fn[:-(len(fn.rsplit(".", 1)[-1])+1)]] = json5.load(f)
+                    self.languages[fn[: -(len(fn.rsplit(".", 1)[-1]) + 1)]] = json5.load(f)
 
         if fallback not in self.languages:
             raise NoFallback(
