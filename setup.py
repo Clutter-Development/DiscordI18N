@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="discord_i18n",
     author="Clutter Development",
-    version="1.0.2",
+    version="1.0.3",
     license="MIT",
     description="A simple I18N handler for Discord bots.",
     python_requires=">=3.10",

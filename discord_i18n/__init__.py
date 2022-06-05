@@ -26,7 +26,7 @@ __title__ = "discord_i18n"
 __author__ = "Clutter Development"
 __license__ = "MIT"
 __copyright__ = "Copyright (c) 2022-present Clutter Development"
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 from .errors import *
 from .i18n import *
