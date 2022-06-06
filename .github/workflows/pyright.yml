@@ -2,7 +2,7 @@ name: PyRight
 on: [ pull_request, push ]
 jobs:
   build:
-    if: github.event.pull_request.user.type != 'Bot' && !contains(github.event.pull_request.labels.*.name, 'skip-ci')
+    if: github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
     strategy:
       matrix:
