@@ -34,6 +34,23 @@ class DiscordI18N:
                 f"The fallback language ({fallback}) does not exist in the languages directory ({lang_file_dir})."
             )
 
+    def collect_translations(self, text: str, /) -> dict[str, str]:
+        """Gets all translations of a string.
+
+        Args:
+            text (str): The translation code to get the translations of.
+
+        Returns:
+            dict[str, str]: All translations of the translation code.
+        """
+        result = {}
+
+        for language, value in self.languages.items():
+            if translation := find_in_nested_dict(text, value):
+                result[language] = translation
+
+        return result
+
     async def translate_with_id(
         self, id: int, text: str, /, *, type: Literal["guild", "user"]
     ) -> str:
