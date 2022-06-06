@@ -18,13 +18,13 @@ __all__ = ("DiscordI18N",)
 
 class DiscordI18N:
     def __init__(
-        self,
-        language_file_directory: str,
-        /,
-        *,
-        db: MongoManager,
-        fallback_language: str,
-        invalid_code: str | None = None,
+            self,
+            language_file_directory: str,
+            /,
+            *,
+            db: MongoManager,
+            fallback_language: str,
+            invalid_code: str | None = None,
     ) -> None:
         """Initialize the DiscordI18N class.
 
@@ -70,12 +70,12 @@ class DiscordI18N:
         }
 
     async def translate_with_id(
-        self,
-        object_id: int,
-        code: str,
-        /,
-        *,
-        object_type: Literal["guild", "user"] = "user",
+            self,
+            object_id: int,
+            code: str,
+            /,
+            *,
+            object_type: Literal["guild", "user"] = "user",
     ) -> str:
         """Fetches the preferred language using the id and type. Then gets the translation with the language.
         If the translation is not found, the fallback translation is used. If the fallback translation is not found, an error is raised.
@@ -111,12 +111,12 @@ class DiscordI18N:
         return translated or self._invalid_code.format(code)  # type: ignore
 
     async def __call__(
-        self,
-        ctx: discord.Message | discord.Interaction | commands.Context,
-        code: str,
-        /,
-        *,
-        prefer_guild: bool = False,
+            self,
+            ctx: discord.Message | discord.Interaction | commands.Context,
+            code: str,
+            /,
+            *,
+            prefer_guild: bool = False,
     ) -> str:
         """Gets the corresponding translation for the translation code.
 
